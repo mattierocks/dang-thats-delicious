@@ -1,4 +1,5 @@
-const axios = require('axios');
+import axios from 'axios';
+import dompurify from 'dompurify';
 
 function searchResultsHTML(stores) {
     return stores.map(store => {
@@ -7,7 +8,7 @@ function searchResultsHTML(stores) {
                 <strong>${store.name}</strong>
             </a>
         `;
-    }).join('')
+    }).join('');
 }
 
 function typeAhead(search) {
@@ -25,21 +26,23 @@ function typeAhead(search) {
 
         // show the search results
         searchResults.style.display = 'block';
-        searchResults.innerHTML = '';
 
         axios
             .get(`/api/search?q=${this.value}`)
             .then(res => {
                 if (res.data.length) {
-                    searchResults.innerHTML = searchResultsHTML(res.data);
+                    searchResults.innerHTML = dompurify.sanitize(searchResultsHTML(res.data));
+                    return;
                 }
+                // tell them nothing came back
+                searchResults.innerHTML = dompurify.sanitize(`<div class="search__result">No results for ${this.value} found!</div>`);
             })
             .catch(err => {
                 console.error(err);
             });
     });
 
-    // Handle keybaord inputs
+    // Handle keyboard inputs
     searchInput.on('keyup', (e) => {
         // if they aren't pressing up, down or enter, who cares!
         if (![38, 40, 13].includes(e.keycode)) {
@@ -59,7 +62,12 @@ function typeAhead(search) {
             next = items[items.length - 1]
         } else if (e.keycode === 13 && current.href) {
             window.location = current.href;
+            return;
         }
+        if (current) {
+            current.classList.remove(activeClass);
+        }
+        next.classList.add(activeClass);
     });
 }
 

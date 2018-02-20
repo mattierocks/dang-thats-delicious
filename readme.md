@@ -1,3 +1,13 @@
+##Intro
+
+First off, check out the actual site at the following links:
+
+
+
+Second, props to [Wes Bos](http://wesbos.com/), as I used his tutorial [Learn Node](https://learnnode.com/) to make this. 
+
+Highly recommended.
+
 ## What is this?
 
 Just you wait folks!

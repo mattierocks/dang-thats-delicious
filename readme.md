@@ -2,7 +2,9 @@
 
 First off, check out the actual site at the following links:
 
+[Deployed with Now](https://dang-thats-delicious-uowdfloorx.now.sh/)
 
+[Deployed with Heroku](https://wow-thats-delicious.herokuapp.com/)
 
 Second, props to [Wes Bos](http://wesbos.com/), as I used his tutorial [Learn Node](https://learnnode.com/) to make this. 
 
